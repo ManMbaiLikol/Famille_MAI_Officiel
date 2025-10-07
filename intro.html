@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Famille MAÏ – Introduction</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="css/style.css">
   <style>
     body {
@@ -72,22 +73,23 @@
       animation: fadeInUp 2s ease-in-out 1s forwards;
     }
 
-    /* Bouton pour activer l'audio (au cas où autoplay est bloqué) */
+    /* Message de démarrage audio */
     .audio-control {
       position: absolute;
       bottom: 30px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.3);
       color: white;
-      padding: 12px 30px;
+      padding: 10px 25px;
       border-radius: 50px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 14px;
       opacity: 0;
-      animation: fadeInUp 2s ease-in-out 1.5s forwards;
+      animation: fadeInUp 2s ease-in-out 1.5s forwards, pulse 2s ease-in-out infinite;
       transition: all 0.3s ease;
-      display: none; /* Caché par défaut, affiché si autoplay échoue */
+      display: block;
     }
 
     .audio-control:hover {
@@ -96,8 +98,14 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
-    .audio-control.show {
-      display: block;
+    .audio-control.hide {
+      opacity: 0 !important;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
     @keyframes fadeZoomIn {
@@ -158,65 +166,110 @@
     <p class="subtitle-text">🌿 MA GWAHÈ • Village MINSE • Pays Bassa</p>
   </div>
 
-  <!-- Bouton pour activer l'audio si nécessaire -->
-  <button id="audioBtn" class="audio-control">🎵 Activer le son</button>
+  <!-- Message pour démarrer l'expérience -->
+  <button id="startBtn" class="audio-control">🎵 CLIQUEZ ICI POUR DÉMARRER</button>
 
   <!-- Audio d'intro avec la kora -->
-  <audio id="introAudio" loop>
+  <audio id="introAudio" loop preload="auto">
     <source src="images/intro-kora.mp3" type="audio/mpeg">
     Votre navigateur ne supporte pas l'élément audio.
   </audio>
 
   <script>
     const audio = document.getElementById('introAudio');
-    const audioBtn = document.getElementById('audioBtn');
-    let audioPlayed = false;
+    const startBtn = document.getElementById('startBtn');
+    let audioStarted = false;
+    let redirectTimeout;
 
-    // Tenter de jouer l'audio automatiquement
-    function playAudio() {
-      audio.play()
-        .then(() => {
-          audioPlayed = true;
-          console.log('Audio lecture automatique réussie');
-        })
-        .catch((error) => {
-          console.log('Autoplay bloqué, affichage du bouton:', error);
-          // Si l'autoplay est bloqué, afficher le bouton
-          audioBtn.classList.add('show');
-        });
+    // Fonction pour démarrer l'expérience
+    function startExperience() {
+      if (audioStarted) {
+        console.log('Audio déjà démarré, ignoré');
+        return;
+      }
+
+      console.log('🎵 Tentative de démarrage audio...');
+
+      // Forcer le volume au maximum
+      audio.volume = 1.0;
+      audio.muted = false;
+
+      // Lancer l'audio
+      const playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('✅ Audio démarré avec SUCCÈS !');
+            console.log('   Volume:', audio.volume);
+            console.log('   Muted:', audio.muted);
+            console.log('   Paused:', audio.paused);
+            console.log('   Duration:', audio.duration);
+
+            // Marquer comme démarré seulement si succès
+            audioStarted = true;
+
+            // Masquer le message
+            startBtn.classList.add('hide');
+
+            // Démarrer le compte à rebours pour la redirection
+            startRedirectTimer();
+          })
+          .catch((error) => {
+            console.error('❌ ERREUR lecture audio:', error);
+            console.error('   Message:', error.message);
+            // NE PAS marquer audioStarted = true en cas d'erreur
+            // pour permettre une nouvelle tentative
+            startBtn.textContent = '❌ Erreur - Recliquez ici';
+            startBtn.style.background = 'rgba(255, 100, 100, 0.3)';
+          });
+      }
     }
 
-    // Jouer l'audio au chargement
-    window.addEventListener('load', () => {
-      playAudio();
+    // Démarrer le timer de redirection
+    function startRedirectTimer() {
+      redirectTimeout = setTimeout(() => {
+        console.log('⏱️ Temps écoulé, redirection...');
+        // Fade out de l'audio
+        let volume = 1;
+        const fadeOut = setInterval(() => {
+          if (volume > 0) {
+            volume -= 0.1;
+            audio.volume = Math.max(0, volume);
+          } else {
+            clearInterval(fadeOut);
+            audio.pause();
+            window.location.href = "accueil.html";
+          }
+        }, 100);
+      }, 10000);
+    }
+
+    // SEUL ÉVÉNEMENT : Clic sur le bouton
+    startBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('👆 Clic sur le bouton détecté !');
+      startExperience();
     });
 
-    // Bouton pour activer manuellement l'audio
-    audioBtn.addEventListener('click', () => {
-      audio.play();
-      audioBtn.style.display = 'none';
-      audioPlayed = true;
+    // Touche Enter ou Espace pour démarrer
+    document.addEventListener('keydown', function(e) {
+      if ((e.key === 'Enter' || e.key === ' ') && !audioStarted) {
+        e.preventDefault();
+        console.log('⌨️ Touche détectée:', e.key);
+        startExperience();
+      }
     });
 
-    // Redirection vers index.html après 5 secondes
-    setTimeout(() => {
-      // Fade out de l'audio
-      let volume = 1;
-      const fadeOut = setInterval(() => {
-        if (volume > 0) {
-          volume -= 0.1;
-          audio.volume = Math.max(0, volume);
-        } else {
-          clearInterval(fadeOut);
-          audio.pause();
-          window.location.href = "accueil.html";
-        }
-      }, 100);
-    }, 5000);
-
-    // Permettre de passer l'intro en cliquant n'importe où
+    // Permettre de passer l'intro en cliquant n'importe où (après le démarrage)
     document.addEventListener('click', (e) => {
-      if (!e.target.matches('#audioBtn')) {
+      if (audioStarted && !e.target.matches('#startBtn')) {
+        // Annuler le timeout de redirection automatique
+        if (redirectTimeout) {
+          clearTimeout(redirectTimeout);
+        }
+
         // Fade out rapide
         let volume = audio.volume;
         const quickFadeOut = setInterval(() => {
@@ -232,10 +285,19 @@
       }
     });
 
-    // Touche Espace ou Entrée pour passer
+    // Touche Espace ou Entrée pour démarrer ou passer
     document.addEventListener('keydown', (e) => {
       if (e.key === ' ' || e.key === 'Enter') {
-        window.location.href = "index.html";
+        if (!audioStarted) {
+          startExperience();
+        } else {
+          // Annuler le timeout et rediriger immédiatement
+          if (redirectTimeout) {
+            clearTimeout(redirectTimeout);
+          }
+          audio.pause();
+          window.location.href = "accueil.html";
+        }
       }
     });
   </script>
