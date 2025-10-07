@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famille MAÏ – Galerie Photos</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gallery-hero {
+      background: linear-gradient(135deg, rgba(0, 77, 64, 0.95), rgba(0, 105, 92, 0.9)),
+                  url('images/fond.jpg') center/cover;
+      color: white;
+      padding: 80px 30px;
+      text-align: center;
+      margin: -30px -30px 40px -30px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .gallery-hero h1 {
+      font-size: 48px;
+      margin: 0 0 15px 0;
+      text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-hero p {
+      font-size: 18px;
+      opacity: 0.95;
+      margin: 0;
+    }
+
+    .albums-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .album-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .album-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .album-cover {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .album-cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, 30px); }
+    }
+
+    .album-info {
+      padding: 20px;
+    }
+
+    .album-info h3 {
+      margin: 0 0 10px 0;
+      color: #004d40;
+      font-size: 22px;
+    }
+
+    .album-info p {
+      margin: 0 0 15px 0;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .album-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .album-count {
+      color: #00695c;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .album-date {
+      color: #999;
+      font-size: 12px;
+    }
+
+    /* Modal pour afficher les photos */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 20px 30px;
+      background: rgba(0, 77, 64, 0.9);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+
+    .close-modal:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px 30px;
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .photo-item {
+      aspect-ratio: 1;
+      background: #f0f0f0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      color: rgba(0, 77, 64, 0.3);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .photo-item:hover {
+      transform: scale(1.05);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .empty-state h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .gallery-hero h1 {
+        font-size: 32px;
+      }
+
+      .albums-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .photos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo">
+    <button class="menu-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav>
+      <a href="accueil.html">Accueil</a>
+      <a href="histoire.html">Histoire & Origine</a>
+      <a href="arbre-cascade.html">Arbre Généalogique</a>
+      <a href="galerie.html" class="active">Galerie Photos</a>
+      <a href="evenements.html">Événements</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="contenu">
+    <div class="gallery-hero">
+      <h1>📸 Galerie Photos</h1>
+      <p>Souvenirs et moments précieux de la Famille MAÏ</p>
+    </div>
+
+    <div class="albums-grid" id="albumsGrid">
+      <!-- Albums seront générés par JavaScript -->
+    </div>
+  </main>
+
+  <!-- Modal pour afficher les photos d'un album -->
+  <div class="modal" id="photoModal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="photos-grid" id="photosGrid"></div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Famille MAÏ – <a href="https://famillemai.cm">www.famillemai.cm</a>
+  </footer>
+
+  <script>
+    // Données des albums (à remplacer par de vraies photos plus tard)
+    const albums = [
+      {
+        id: 1,
+        title: "Réunion Familiale 2024",
+        description: "Grande réunion de famille au village MINSE",
+        icon: "👨‍👩‍👧‍👦",
+        photoCount: 45,
+        date: "Décembre 2024",
+        photos: []
+      },
+      {
+        id: 2,
+        title: "Cérémonies Traditionnelles",
+        description: "Rites et cérémonies ancestrales de la famille",
+        icon: "🎭",
+        photoCount: 32,
+        date: "2023-2024",
+        photos: []
+      },
+      {
+        id: 3,
+        title: "Mariages",
+        description: "Célébrations des unions dans la famille",
+        icon: "💒",
+        photoCount: 67,
+        date: "2020-2024",
+        photos: []
+      },
+      {
+        id: 4,
+        title: "Naissances & Baptêmes",
+        description: "Arrivée des nouveaux membres de la famille",
+        icon: "👶",
+        photoCount: 28,
+        date: "2022-2024",
+        photos: []
+      },
+      {
+        id: 5,
+        title: "Archives Historiques",
+        description: "Photos anciennes et documents familiaux",
+        icon: "📜",
+        photoCount: 18,
+        date: "1960-2000",
+        photos: []
+      },
+      {
+        id: 6,
+        title: "Vie au Village",
+        description: "Quotidien et paysages de MINSE",
+        icon: "🏘️",
+        photoCount: 54,
+        date: "2024",
+        photos: []
+      }
+    ];
+
+    // Générer les cartes d'albums
+    function renderAlbums() {
+      const albumsGrid = document.getElementById('albumsGrid');
+      albumsGrid.innerHTML = albums.map(album => `
+        <div class="album-card" onclick="openAlbum(${album.id})">
+          <div class="album-cover">
+            ${album.icon}
+          </div>
+          <div class="album-info">
+            <h3>${album.title}</h3>
+            <p>${album.description}</p>
+            <div class="album-meta">
+              <span class="album-count">📷 ${album.photoCount} photos</span>
+              <span class="album-date">${album.date}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Ouvrir un album
+    function openAlbum(albumId) {
+      const album = albums.find(a => a.id === albumId);
+      if (!album) return;
+
+      document.getElementById('modalTitle').textContent = album.title;
+      const photosGrid = document.getElementById('photosGrid');
+
+      if (album.photos.length === 0) {
+        // Aucune photo pour le moment
+        photosGrid.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <h3>🖼️ Album en cours de création</h3>
+            <p>Les photos seront ajoutées prochainement</p>
+          </div>
+        `;
+      } else {
+        // Afficher les photos (à implémenter avec de vraies images)
+        photosGrid.innerHTML = album.photos.map((photo, index) => `
+          <div class="photo-item">
+            📷
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('photoModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Fermer le modal
+    function closeModal() {
+      document.getElementById('photoModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Fermer avec la touche Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Header sticky effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Menu hamburger
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+
+    // Initialiser la page
+    renderAlbums();
+  </script>
+</body>
+</html>

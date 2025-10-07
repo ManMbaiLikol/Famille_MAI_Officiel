@@ -6,6 +6,200 @@
   <title>Famille MAÏ – À propos / Contact</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .contact-info {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 30px;
+      border-radius: 12px;
+      height: fit-content;
+    }
+
+    .contact-info h2 {
+      color: #004d40;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .info-item:hover {
+      transform: translateX(5px);
+    }
+
+    .info-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .info-item strong {
+      display: block;
+      color: #004d40;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .info-item p {
+      margin: 0;
+      color: #555;
+    }
+
+    .info-item a {
+      color: #00695c;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .info-item a:hover {
+      color: #004d40;
+      text-decoration: underline;
+    }
+
+    .info-note {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(0, 77, 64, 0.05);
+      border-left: 4px solid #004d40;
+      border-radius: 4px;
+    }
+
+    .info-note p {
+      margin: 0;
+      color: #555;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .contact-form-wrapper {
+      background: white;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .contact-form-wrapper h2 {
+      color: #004d40;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    .contact-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: #004d40;
+      box-shadow: 0 0 0 3px rgba(0, 77, 64, 0.1);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .error-message {
+      display: block;
+      color: #d32f2f;
+      font-size: 13px;
+      margin-top: 5px;
+      min-height: 18px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 77, 64, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-message {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .form-message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .form-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -19,7 +213,9 @@
       <a href="accueil.html">Accueil</a>
       <a href="histoire.html">Histoire & Origine</a>
       <a href="arbre-cascade.html">Arbre Généalogique</a>
-      <a href="contact.html" class="active">À propos / Contact</a>
+      <a href="galerie.html">Galerie Photos</a>
+      <a href="evenements.html">Événements</a>
+      <a href="contact.html" class="active">Contact</a>
     </nav>
   </header>
 
@@ -30,16 +226,86 @@
       entre tous les descendants de la lignée MAÏ, issus du village MINSE (MA GWAHÈ).
     </p>
 
-    <h2>Nous contacter</h2>
-    <p>📍 Cameroun – Douala / Yaoundé</p>
-    <p>📱 WhatsApp : <a href="https://wa.me/237699849541" target="_blank">+237 699 84 95 41</a></p>
-    <p>✉️ Email : <a href="mailto:kamerdesignstyle@gmail.com">kamerdesignstyle@gmail.com</a></p>
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>Nos coordonnées</h2>
+        <div class="info-item">
+          <span class="info-icon">📍</span>
+          <div>
+            <strong>Localisation</strong>
+            <p>Cameroun – Douala / Yaoundé</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📱</span>
+          <div>
+            <strong>WhatsApp</strong>
+            <p><a href="https://wa.me/237699849541" target="_blank">+237 699 84 95 41</a></p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">✉️</span>
+          <div>
+            <strong>Email</strong>
+            <p><a href="mailto:kamerdesignstyle@gmail.com">kamerdesignstyle@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="info-note">
+          <p>
+            La mise à jour du site est assurée par les membres de la Famille MAÏ,
+            sous la supervision du comité de coordination familiale.
+          </p>
+        </div>
+      </div>
 
-    <h2>Coordination du site</h2>
-    <p>
-      La mise à jour du site est assurée par les membres de la Famille MAÏ,
-      sous la supervision du comité de coordination familiale.
-    </p>
+      <div class="contact-form-wrapper">
+        <h2>Envoyez-nous un message</h2>
+        <form id="contactForm" class="contact-form">
+          <div class="form-group">
+            <label for="nom">Nom complet *</label>
+            <input type="text" id="nom" name="nom" required>
+            <span class="error-message" id="nom-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error-message" id="email-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="telephone">Téléphone (optionnel)</label>
+            <input type="tel" id="telephone" name="telephone">
+          </div>
+
+          <div class="form-group">
+            <label for="sujet">Sujet *</label>
+            <select id="sujet" name="sujet" required>
+              <option value="">Sélectionnez un sujet</option>
+              <option value="information">Demande d'information</option>
+              <option value="genealogie">Arbre généalogique</option>
+              <option value="evenement">Événement familial</option>
+              <option value="correction">Correction d'information</option>
+              <option value="autre">Autre</option>
+            </select>
+            <span class="error-message" id="sujet-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+            <span class="error-message" id="message-error"></span>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span class="btn-text">Envoyer le message</span>
+            <span class="btn-loading" style="display: none;">Envoi en cours...</span>
+          </button>
+
+          <div class="form-message" id="formMessage" style="display: none;"></div>
+        </form>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -72,6 +338,180 @@
         nav.classList.remove('active');
       });
     });
+
+    // Validation et envoi du formulaire de contact
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    // Fonction de validation des champs
+    function validateField(field, errorElement, validationFn, errorMsg) {
+      const value = field.value.trim();
+      if (!validationFn(value)) {
+        errorElement.textContent = errorMsg;
+        field.style.borderColor = '#d32f2f';
+        return false;
+      } else {
+        errorElement.textContent = '';
+        field.style.borderColor = '#004d40';
+        return true;
+      }
+    }
+
+    // Validation email
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Validation en temps réel
+    const nomField = document.getElementById('nom');
+    const emailField = document.getElementById('email');
+    const sujetField = document.getElementById('sujet');
+    const messageField = document.getElementById('message');
+
+    nomField.addEventListener('blur', () => {
+      validateField(
+        nomField,
+        document.getElementById('nom-error'),
+        (val) => val.length >= 2,
+        'Le nom doit contenir au moins 2 caractères'
+      );
+    });
+
+    emailField.addEventListener('blur', () => {
+      validateField(
+        emailField,
+        document.getElementById('email-error'),
+        isValidEmail,
+        'Veuillez entrer une adresse email valide'
+      );
+    });
+
+    sujetField.addEventListener('change', () => {
+      validateField(
+        sujetField,
+        document.getElementById('sujet-error'),
+        (val) => val !== '',
+        'Veuillez sélectionner un sujet'
+      );
+    });
+
+    messageField.addEventListener('blur', () => {
+      validateField(
+        messageField,
+        document.getElementById('message-error'),
+        (val) => val.length >= 10,
+        'Le message doit contenir au moins 10 caractères'
+      );
+    });
+
+    // Soumission du formulaire
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validation complète
+      const isNomValid = validateField(
+        nomField,
+        document.getElementById('nom-error'),
+        (val) => val.length >= 2,
+        'Le nom doit contenir au moins 2 caractères'
+      );
+
+      const isEmailValid = validateField(
+        emailField,
+        document.getElementById('email-error'),
+        isValidEmail,
+        'Veuillez entrer une adresse email valide'
+      );
+
+      const isSujetValid = validateField(
+        sujetField,
+        document.getElementById('sujet-error'),
+        (val) => val !== '',
+        'Veuillez sélectionner un sujet'
+      );
+
+      const isMessageValid = validateField(
+        messageField,
+        document.getElementById('message-error'),
+        (val) => val.length >= 10,
+        'Le message doit contenir au moins 10 caractères'
+      );
+
+      if (!isNomValid || !isEmailValid || !isSujetValid || !isMessageValid) {
+        showMessage('Veuillez corriger les erreurs dans le formulaire', 'error');
+        return;
+      }
+
+      // Afficher l'état de chargement
+      const submitBtn = contactForm.querySelector('.submit-btn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnLoading = submitBtn.querySelector('.btn-loading');
+
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'inline';
+
+      // Récupérer les données du formulaire
+      const formData = {
+        nom: nomField.value.trim(),
+        email: emailField.value.trim(),
+        telephone: document.getElementById('telephone').value.trim(),
+        sujet: sujetField.value,
+        message: messageField.value.trim()
+      };
+
+      // Simuler l'envoi (à remplacer par un vrai backend)
+      try {
+        // Option 1: Utiliser mailto (simple mais ouvre le client mail)
+        const mailtoLink = `mailto:kamerdesignstyle@gmail.com?subject=${encodeURIComponent('Contact Famille MAÏ - ' + formData.sujet)}&body=${encodeURIComponent(
+          `Nom: ${formData.nom}\n` +
+          `Email: ${formData.email}\n` +
+          `Téléphone: ${formData.telephone || 'Non renseigné'}\n` +
+          `Sujet: ${formData.sujet}\n\n` +
+          `Message:\n${formData.message}`
+        )}`;
+
+        // Simuler un délai d'envoi
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Ouvrir le client mail
+        window.location.href = mailtoLink;
+
+        // Afficher le message de succès
+        showMessage('Votre message a été préparé. Veuillez confirmer l\'envoi dans votre client mail.', 'success');
+
+        // Réinitialiser le formulaire après un délai
+        setTimeout(() => {
+          contactForm.reset();
+          // Réinitialiser les bordures
+          [nomField, emailField, sujetField, messageField].forEach(field => {
+            field.style.borderColor = '#e0e0e0';
+          });
+        }, 2000);
+
+      } catch (error) {
+        console.error('Erreur:', error);
+        showMessage('Une erreur s\'est produite. Veuillez réessayer ou nous contacter directement.', 'error');
+      } finally {
+        // Restaurer le bouton
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+      }
+    });
+
+    // Fonction pour afficher les messages
+    function showMessage(message, type) {
+      formMessage.textContent = message;
+      formMessage.className = `form-message ${type}`;
+      formMessage.style.display = 'block';
+
+      // Masquer le message après 8 secondes
+      setTimeout(() => {
+        formMessage.style.display = 'none';
+      }, 8000);
+    }
   </script>
 </body>
 </html>

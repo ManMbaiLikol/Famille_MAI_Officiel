@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famille MAÏ – Événements</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .events-hero {
+      background: linear-gradient(135deg, rgba(0, 77, 64, 0.95), rgba(0, 105, 92, 0.9)),
+                  url('images/fond.jpg') center/cover;
+      color: white;
+      padding: 80px 30px;
+      text-align: center;
+      margin: -30px -30px 40px -30px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .events-hero h1 {
+      font-size: 48px;
+      margin: 0 0 15px 0;
+      text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .events-hero p {
+      font-size: 18px;
+      opacity: 0.95;
+      margin: 0;
+    }
+
+    .events-filter {
+      display: flex;
+      gap: 15px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 10px 25px;
+      background: white;
+      border: 2px solid #004d40;
+      color: #004d40;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #004d40;
+      color: white;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #004d40 0%, #00695c 50%, #6c8b63 100%);
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      position: relative;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .timeline-item:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+    .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+    .timeline-item:nth-child(n+6) { animation-delay: 0.6s; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .timeline-content {
+      width: 45%;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .timeline-content:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 4px solid #004d40;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::before {
+      left: -60px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::before {
+      right: -60px;
+    }
+
+    .event-date {
+      display: inline-block;
+      background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+      color: white;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .event-type {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .event-type.mariage {
+      background: #fce4ec;
+      color: #c2185b;
+    }
+
+    .event-type.naissance {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .event-type.reunion {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+
+    .event-type.ceremonie {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .event-type.deces {
+      background: #e0e0e0;
+      color: #424242;
+    }
+
+    .event-title {
+      font-size: 20px;
+      color: #004d40;
+      margin: 10px 0;
+      font-weight: 700;
+    }
+
+    .event-description {
+      color: #666;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .event-participants {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .timeline-icon {
+      font-size: 50px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 10px;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .empty-state h3 {
+      font-size: 24px;
+      color: #004d40;
+      margin-bottom: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .events-hero h1 {
+        font-size: 32px;
+      }
+
+      .timeline::before {
+        left: 30px;
+      }
+
+      .timeline-item {
+        flex-direction: column !important;
+        align-items: flex-start;
+        padding-left: 60px;
+      }
+
+      .timeline-content {
+        width: 100%;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content::before,
+      .timeline-item:nth-child(even) .timeline-content::before {
+        left: -60px;
+      }
+
+      .timeline-icon {
+        left: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo">
+    <button class="menu-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav>
+      <a href="accueil.html">Accueil</a>
+      <a href="histoire.html">Histoire & Origine</a>
+      <a href="arbre-cascade.html">Arbre Généalogique</a>
+      <a href="galerie.html">Galerie Photos</a>
+      <a href="evenements.html" class="active">Événements</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="contenu">
+    <div class="events-hero">
+      <h1>📅 Événements Familiaux</h1>
+      <p>Chronologie des moments importants de la Famille MAÏ</p>
+    </div>
+
+    <div class="events-filter">
+      <button class="filter-btn active" onclick="filterEvents('tous')">Tous</button>
+      <button class="filter-btn" onclick="filterEvents('mariage')">💒 Mariages</button>
+      <button class="filter-btn" onclick="filterEvents('naissance')">👶 Naissances</button>
+      <button class="filter-btn" onclick="filterEvents('reunion')">👨‍👩‍👧‍👦 Réunions</button>
+      <button class="filter-btn" onclick="filterEvents('ceremonie')">🎭 Cérémonies</button>
+      <button class="filter-btn" onclick="filterEvents('deces')">🕊️ Hommages</button>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <!-- Événements générés par JavaScript -->
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Famille MAÏ – <a href="https://famillemai.cm">www.famillemai.cm</a>
+  </footer>
+
+  <script>
+    // Données des événements (à enrichir avec de vraies données)
+    const events = [
+      {
+        date: "25 Décembre 2024",
+        type: "reunion",
+        icon: "👨‍👩‍👧‍👦",
+        title: "Grande Réunion Familiale Annuelle",
+        description: "Rassemblement de toute la famille au village MINSE pour célébrer les traditions et renforcer les liens familiaux.",
+        participants: "Plus de 200 membres présents"
+      },
+      {
+        date: "15 Novembre 2024",
+        type: "mariage",
+        icon: "💒",
+        title: "Mariage de Jean MAÏ & Marie NDONGO",
+        description: "Union célébrée selon les traditions Bassa, suivie d'une grande fête familiale.",
+        participants: "300 invités"
+      },
+      {
+        date: "3 Octobre 2024",
+        type: "naissance",
+        icon: "👶",
+        title: "Naissance de Léa MAÏ",
+        description: "Arrivée du nouveau membre de la branche cadette. Cérémonie de présentation à la famille.",
+        participants: "Famille proche"
+      },
+      {
+        date: "12 Août 2024",
+        type: "ceremonie",
+        icon: "🎭",
+        title: "Cérémonie Traditionnelle d'Initiation",
+        description: "Rite de passage pour les jeunes de la famille, perpétuant les traditions ancestrales MA GWAHÈ.",
+        participants: "15 initiés, 80 membres présents"
+      },
+      {
+        date: "5 Juin 2024",
+        type: "reunion",
+        icon: "📚",
+        title: "Conseil des Anciens",
+        description: "Réunion pour discuter de l'avenir de la famille et prendre des décisions importantes concernant le patrimoine familial.",
+        participants: "20 anciens"
+      },
+      {
+        date: "20 Mars 2024",
+        type: "deces",
+        icon: "🕊️",
+        title: "Hommage à Papa Pierre MAÏ",
+        description: "Cérémonie en mémoire de notre patriarche, pilier de la famille pendant 60 ans.",
+        participants: "Toute la famille réunie"
+      },
+      {
+        date: "14 Février 2024",
+        type: "mariage",
+        icon: "💒",
+        title: "Mariage de Sophie MAÏ & Paul KAMENI",
+        description: "Union célébrée à Douala avec une grande réception familiale.",
+        participants: "250 invités"
+      },
+      {
+        date: "1 Janvier 2024",
+        type: "reunion",
+        icon: "🎉",
+        title: "Célébration du Nouvel An Familial",
+        description: "Rassemblement pour accueillir la nouvelle année ensemble et renouveler nos engagements familiaux.",
+        participants: "180 membres"
+      },
+      {
+        date: "10 Septembre 2023",
+        type: "naissance",
+        icon: "👶",
+        title: "Naissance des jumeaux MAÏ",
+        description: "Double joie avec l'arrivée de Lucas et Luna dans la famille.",
+        participants: "Famille et proches"
+      },
+      {
+        date: "5 Juillet 2023",
+        type: "ceremonie",
+        icon: "🏠",
+        title: "Inauguration de la Maison Familiale",
+        description: "Ouverture officielle du lieu de rassemblement familial à MINSE.",
+        participants: "Toute la communauté"
+      }
+    ];
+
+    let currentFilter = 'tous';
+
+    // Générer la timeline
+    function renderTimeline(filter = 'tous') {
+      const timeline = document.getElementById('timeline');
+      const filteredEvents = filter === 'tous'
+        ? events
+        : events.filter(e => e.type === filter);
+
+      if (filteredEvents.length === 0) {
+        timeline.innerHTML = `
+          <div class="empty-state">
+            <h3>Aucun événement trouvé</h3>
+            <p>Aucun événement ne correspond à ce filtre</p>
+          </div>
+        `;
+        return;
+      }
+
+      timeline.innerHTML = filteredEvents.map((event, index) => `
+        <div class="timeline-item" data-type="${event.type}">
+          <div class="timeline-icon">${event.icon}</div>
+          <div class="timeline-content">
+            <div>
+              <span class="event-date">📅 ${event.date}</span>
+              <span class="event-type ${event.type}">${getTypeLabel(event.type)}</span>
+            </div>
+            <h3 class="event-title">${event.title}</h3>
+            <p class="event-description">${event.description}</p>
+            <div class="event-participants">👥 ${event.participants}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Obtenir le label du type d'événement
+    function getTypeLabel(type) {
+      const labels = {
+        mariage: 'Mariage',
+        naissance: 'Naissance',
+        reunion: 'Réunion',
+        ceremonie: 'Cérémonie',
+        deces: 'Hommage'
+      };
+      return labels[type] || type;
+    }
+
+    // Filtrer les événements
+    function filterEvents(type) {
+      currentFilter = type;
+
+      // Mettre à jour les boutons actifs
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // Réafficher la timeline
+      renderTimeline(type);
+    }
+
+    // Header sticky effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Menu hamburger
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+
+    // Initialiser la timeline
+    renderTimeline();
+  </script>
+</body>
+</html>
