@@ -7,36 +7,237 @@
   <link rel="stylesheet" href="css/style.css">
   <style>
     body {
-      background-color: #f6f1e1;
+      background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #6c8b63 100%);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       overflow: hidden;
+      position: relative;
     }
+
+    /* Effet de particules en arrière-plan */
+    .background-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(210, 169, 77, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(244, 208, 63, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(108, 139, 99, 0.1) 0%, transparent 50%);
+      animation: shimmer 10s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .intro-container {
+      text-align: center;
+      z-index: 10;
+      position: relative;
+    }
+
     .logo-intro {
       opacity: 0;
       transform: scale(0.8);
       animation: fadeZoomIn 2s ease-in-out forwards;
+      max-width: 300px;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     }
+
+    .welcome-text {
+      opacity: 0;
+      color: #f4d03f;
+      font-size: 32px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      margin-top: 30px;
+      text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 2s ease-in-out 0.5s forwards;
+    }
+
+    .subtitle-text {
+      opacity: 0;
+      color: white;
+      font-size: 18px;
+      margin-top: 15px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      animation: fadeInUp 2s ease-in-out 1s forwards;
+    }
+
+    /* Bouton pour activer l'audio (au cas où autoplay est bloqué) */
+    .audio-control {
+      position: absolute;
+      bottom: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      opacity: 0;
+      animation: fadeInUp 2s ease-in-out 1.5s forwards;
+      transition: all 0.3s ease;
+      display: none; /* Caché par défaut, affiché si autoplay échoue */
+    }
+
+    .audio-control:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .audio-control.show {
+      display: block;
+    }
+
     @keyframes fadeZoomIn {
-      0% { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1); }
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Animation de rotation douce */
+    .logo-intro {
+      animation: fadeZoomIn 2s ease-in-out forwards, gentleFloat 4s ease-in-out 2s infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .logo-intro {
+        max-width: 200px;
+      }
+      .welcome-text {
+        font-size: 24px;
+      }
+      .subtitle-text {
+        font-size: 14px;
+      }
     }
   </style>
-  <script>
-    // Redirection après 3 secondes
-    setTimeout(() => { window.location.href = "index.html"; }, 3000);
-  </script>
 </head>
 <body>
-  <!-- Son doux africain -->
-  <audio autoplay>
-    <source src="audio/intro-kora.mp3" type="audio/mpeg">
+  <div class="background-pattern"></div>
+
+  <div class="intro-container">
+    <!-- Logo -->
+    <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo-intro">
+
+    <!-- Texte de bienvenue -->
+    <h1 class="welcome-text">Famille MAÏ</h1>
+    <p class="subtitle-text">🌿 MA GWAHÈ • Village MINSE • Pays Bassa</p>
+  </div>
+
+  <!-- Bouton pour activer l'audio si nécessaire -->
+  <button id="audioBtn" class="audio-control">🎵 Activer le son</button>
+
+  <!-- Audio d'intro avec la kora -->
+  <audio id="introAudio" loop>
+    <source src="images/intro-kora.mp3" type="audio/mpeg">
+    Votre navigateur ne supporte pas l'élément audio.
   </audio>
 
-  <!-- Logo -->
-  <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo-intro">
+  <script>
+    const audio = document.getElementById('introAudio');
+    const audioBtn = document.getElementById('audioBtn');
+    let audioPlayed = false;
+
+    // Tenter de jouer l'audio automatiquement
+    function playAudio() {
+      audio.play()
+        .then(() => {
+          audioPlayed = true;
+          console.log('Audio lecture automatique réussie');
+        })
+        .catch((error) => {
+          console.log('Autoplay bloqué, affichage du bouton:', error);
+          // Si l'autoplay est bloqué, afficher le bouton
+          audioBtn.classList.add('show');
+        });
+    }
+
+    // Jouer l'audio au chargement
+    window.addEventListener('load', () => {
+      playAudio();
+    });
+
+    // Bouton pour activer manuellement l'audio
+    audioBtn.addEventListener('click', () => {
+      audio.play();
+      audioBtn.style.display = 'none';
+      audioPlayed = true;
+    });
+
+    // Redirection vers index.html après 5 secondes
+    setTimeout(() => {
+      // Fade out de l'audio
+      let volume = 1;
+      const fadeOut = setInterval(() => {
+        if (volume > 0) {
+          volume -= 0.1;
+          audio.volume = Math.max(0, volume);
+        } else {
+          clearInterval(fadeOut);
+          audio.pause();
+          window.location.href = "index.html";
+        }
+      }, 100);
+    }, 5000);
+
+    // Permettre de passer l'intro en cliquant n'importe où
+    document.addEventListener('click', (e) => {
+      if (!e.target.matches('#audioBtn')) {
+        // Fade out rapide
+        let volume = audio.volume;
+        const quickFadeOut = setInterval(() => {
+          if (volume > 0) {
+            volume -= 0.2;
+            audio.volume = Math.max(0, volume);
+          } else {
+            clearInterval(quickFadeOut);
+            audio.pause();
+            window.location.href = "index.html";
+          }
+        }, 50);
+      }
+    });
+
+    // Touche Espace ou Entrée pour passer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
 </body>
 </html>
