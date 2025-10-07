@@ -77,6 +77,8 @@
     .audio-control {
       position: absolute;
       bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.3);
@@ -90,11 +92,14 @@
       animation: fadeInUp 2s ease-in-out 1.5s forwards, pulse 2s ease-in-out infinite;
       transition: all 0.3s ease;
       display: block;
+      z-index: 100;
+      min-width: 250px;
+      text-align: center;
     }
 
     .audio-control:hover {
       background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-3px);
+      transform: translateX(-50%) translateY(-3px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
@@ -151,6 +156,16 @@
       .subtitle-text {
         font-size: 14px;
       }
+      .audio-control {
+        bottom: 20px;
+        padding: 12px 20px;
+        font-size: 15px;
+        min-width: 280px;
+        max-width: 90vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   </style>
 </head>
@@ -181,6 +196,21 @@
     let audioStarted = false;
     let redirectTimeout;
 
+    console.log('📱 Initialisation de la page intro...');
+    console.log('   User Agent:', navigator.userAgent);
+
+    // S'assurer que le bouton est visible après le chargement de la page
+    window.addEventListener('load', () => {
+      console.log('✅ Page chargée, bouton devrait être visible');
+      // Force l'affichage du bouton en cas de problème d'animation
+      setTimeout(() => {
+        if (!audioStarted) {
+          startBtn.style.opacity = '1';
+          console.log('   Bouton forcé visible');
+        }
+      }, 3000);
+    });
+
     // Fonction pour démarrer l'expérience
     function startExperience() {
       if (audioStarted) {
@@ -189,6 +219,12 @@
       }
 
       console.log('🎵 Tentative de démarrage audio...');
+
+      // Marquer comme démarré immédiatement pour mobile
+      audioStarted = true;
+
+      // Masquer le bouton
+      startBtn.classList.add('hide');
 
       // Forcer le volume au maximum
       audio.volume = 1.0;
@@ -206,42 +242,46 @@
             console.log('   Paused:', audio.paused);
             console.log('   Duration:', audio.duration);
 
-            // Marquer comme démarré seulement si succès
-            audioStarted = true;
-
-            // Masquer le message
-            startBtn.classList.add('hide');
-
             // Démarrer le compte à rebours pour la redirection
             startRedirectTimer();
           })
           .catch((error) => {
             console.error('❌ ERREUR lecture audio:', error);
             console.error('   Message:', error.message);
-            // NE PAS marquer audioStarted = true en cas d'erreur
-            // pour permettre une nouvelle tentative
-            startBtn.textContent = '❌ Erreur - Recliquez ici';
-            startBtn.style.background = 'rgba(255, 100, 100, 0.3)';
+            // Même si l'audio échoue, on continue avec la redirection
+            console.log('⚠️ Audio bloqué, redirection quand même dans 10s');
+            startRedirectTimer();
           });
+      } else {
+        // Pas de promesse, démarrer quand même le timer
+        console.log('⚠️ Pas de playPromise, redirection quand même');
+        startRedirectTimer();
       }
     }
 
     // Démarrer le timer de redirection
     function startRedirectTimer() {
+      console.log('⏱️ Démarrage du timer de redirection (10s)');
       redirectTimeout = setTimeout(() => {
         console.log('⏱️ Temps écoulé, redirection...');
-        // Fade out de l'audio
-        let volume = 1;
-        const fadeOut = setInterval(() => {
-          if (volume > 0) {
-            volume -= 0.1;
-            audio.volume = Math.max(0, volume);
-          } else {
-            clearInterval(fadeOut);
-            audio.pause();
-            window.location.href = "accueil.html";
-          }
-        }, 100);
+        // Fade out de l'audio si possible
+        try {
+          let volume = audio.volume;
+          const fadeOut = setInterval(() => {
+            if (volume > 0) {
+              volume -= 0.1;
+              audio.volume = Math.max(0, volume);
+            } else {
+              clearInterval(fadeOut);
+              audio.pause();
+              window.location.href = "accueil.html";
+            }
+          }, 100);
+        } catch (e) {
+          // Si erreur, rediriger directement
+          console.error('Erreur fade out:', e);
+          window.location.href = "accueil.html";
+        }
       }, 10000);
     }
 
@@ -253,41 +293,59 @@
       startExperience();
     });
 
-    // Touche Enter ou Espace pour démarrer
-    document.addEventListener('keydown', function(e) {
-      if ((e.key === 'Enter' || e.key === ' ') && !audioStarted) {
-        e.preventDefault();
-        console.log('⌨️ Touche détectée:', e.key);
-        startExperience();
-      }
+    // Support tactile pour mobile
+    startBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('👆 Touch sur le bouton détecté !');
+      startExperience();
     });
 
     // Permettre de passer l'intro en cliquant n'importe où (après le démarrage)
     document.addEventListener('click', (e) => {
       if (audioStarted && !e.target.matches('#startBtn')) {
+        console.log('👆 Clic détecté, passage de l\'intro');
         // Annuler le timeout de redirection automatique
         if (redirectTimeout) {
           clearTimeout(redirectTimeout);
         }
 
-        // Fade out rapide
-        let volume = audio.volume;
-        const quickFadeOut = setInterval(() => {
-          if (volume > 0) {
-            volume -= 0.2;
-            audio.volume = Math.max(0, volume);
-          } else {
-            clearInterval(quickFadeOut);
-            audio.pause();
-            window.location.href = "accueil.html";
-          }
-        }, 50);
+        // Fade out rapide ou redirection directe
+        try {
+          let volume = audio.volume;
+          const quickFadeOut = setInterval(() => {
+            if (volume > 0) {
+              volume -= 0.2;
+              audio.volume = Math.max(0, volume);
+            } else {
+              clearInterval(quickFadeOut);
+              audio.pause();
+              window.location.href = "accueil.html";
+            }
+          }, 50);
+        } catch (e) {
+          window.location.href = "accueil.html";
+        }
+      }
+    });
+
+    // Support tactile pour passer l'intro
+    document.addEventListener('touchend', (e) => {
+      if (audioStarted && !e.target.matches('#startBtn')) {
+        console.log('👆 Touch détecté, passage de l\'intro');
+        if (redirectTimeout) {
+          clearTimeout(redirectTimeout);
+        }
+        audio.pause();
+        window.location.href = "accueil.html";
       }
     });
 
     // Touche Espace ou Entrée pour démarrer ou passer
     document.addEventListener('keydown', (e) => {
       if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        console.log('⌨️ Touche détectée:', e.key);
         if (!audioStarted) {
           startExperience();
         } else {
