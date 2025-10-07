@@ -42,6 +42,8 @@
       text-align: center;
       z-index: 10;
       position: relative;
+      padding: 20px;
+      max-width: 90vw;
     }
 
     .logo-intro {
@@ -49,6 +51,8 @@
       transform: scale(0.8);
       animation: fadeZoomIn 2s ease-in-out forwards;
       max-width: 300px;
+      width: 100%;
+      height: auto;
       filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     }
 
@@ -109,8 +113,12 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.05);
+      }
     }
 
     @keyframes fadeZoomIn {
@@ -141,8 +149,12 @@
     }
 
     @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-10px) scale(1);
+      }
     }
 
     /* Responsive */
@@ -152,19 +164,72 @@
       }
       .welcome-text {
         font-size: 24px;
+        margin-top: 20px;
       }
       .subtitle-text {
         font-size: 14px;
+        margin-top: 10px;
+        padding: 0 10px;
+        line-height: 1.5;
       }
       .audio-control {
         bottom: 20px;
+        left: 50%;
         padding: 12px 20px;
         font-size: 15px;
         min-width: 280px;
-        max-width: 90vw;
+        max-width: 85vw;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+    }
+
+    /* Très petits écrans */
+    @media (max-width: 480px) {
+      .intro-container {
+        padding: 15px;
+      }
+      .logo-intro {
+        max-width: 150px;
+      }
+      .welcome-text {
+        font-size: 20px;
+        margin-top: 15px;
+      }
+      .subtitle-text {
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      .audio-control {
+        bottom: 15px;
+        padding: 10px 18px;
+        font-size: 13px;
+        min-width: auto;
+        max-width: 90vw;
+      }
+    }
+
+    /* Orientation paysage sur mobile */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .intro-container {
+        padding: 10px;
+      }
+      .logo-intro {
+        max-width: 120px;
+      }
+      .welcome-text {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+      .subtitle-text {
+        font-size: 11px;
+        margin-top: 5px;
+      }
+      .audio-control {
+        bottom: 10px;
+        padding: 8px 15px;
+        font-size: 12px;
       }
     }
   </style>
