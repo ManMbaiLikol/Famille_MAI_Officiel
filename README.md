@@ -1,6 +1,10 @@
 # 🌳 Site Web Famille MAÏ
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-success?style=for-the-badge&logo=github)](https://manmbailikol.github.io/Famille_MAI_Officiel/)
+
 Site web généalogique interactif de la Famille MAÏ, descendants de la lignée ancestrale des MA GWAHÈ du village MINSE (pays Bassa, Cameroun).
+
+**🌐 Site en ligne :** [https://manmbailikol.github.io/Famille_MAI_Officiel/](https://manmbailikol.github.io/Famille_MAI_Officiel/)
 
 ## 📋 Description
 
