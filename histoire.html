@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famille MAÏ – Histoire & Origine</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .histoire-hero {
+      background: linear-gradient(135deg, rgba(0, 77, 64, 0.95), rgba(0, 105, 92, 0.9)),
+                  url('images/fond.jpg') center/cover;
+      color: white;
+      padding: 80px 30px;
+      text-align: center;
+      margin: -30px -30px 40px -30px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .histoire-hero h1 {
+      font-size: 48px;
+      margin: 0 0 20px 0;
+      text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+    }
+
+    .histoire-subtitle {
+      font-size: 24px;
+      color: #f4d03f;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .section-block {
+      margin: 50px 0;
+      padding: 35px;
+      background: white;
+      border-radius: 12px;
+      border-left: 6px solid #d2a94d;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-icon {
+      font-size: 42px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 32px;
+      color: #004d40;
+      margin: 20px 0;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+
+    .quote-block {
+      background: #f6f1e1;
+      border-left: 5px solid #d2a94d;
+      padding: 25px 30px;
+      margin: 30px 0;
+      font-style: italic;
+      font-size: 18px;
+      color: #4a4a4a;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .quote-block::before {
+      content: '"';
+      font-size: 80px;
+      color: #d2a94d;
+      opacity: 0.3;
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-family: Georgia, serif;
+    }
+
+    .quote-author {
+      text-align: right;
+      font-weight: 700;
+      color: #004d40;
+      margin-top: 15px;
+      font-style: normal;
+      font-size: 16px;
+    }
+
+    .famille-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .famille-item {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      border: 2px solid #d2a94d;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .famille-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(210, 169, 77, 0.3);
+    }
+
+    .famille-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #004d40;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .ancetre-card {
+      background: linear-gradient(135deg, #004d40, #00695c);
+      color: white;
+      padding: 40px;
+      border-radius: 16px;
+      margin: 40px 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .ancetre-card h3 {
+      font-size: 36px;
+      margin: 0 0 15px 0;
+      font-family: 'Playfair Display', serif;
+      color: #f4d03f;
+    }
+
+    .ancetre-card p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #ffffff;
+    }
+
+    .ancetre-card ul {
+      color: #ffffff;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .ancetre-card ul li {
+      padding-left: 30px;
+      position: relative;
+      margin: 10px 0;
+    }
+
+    .ancetre-card ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #f4d03f;
+      font-size: 20px;
+    }
+
+    .ancetre-card strong {
+      color: #f4d03f;
+      font-weight: 700;
+    }
+
+    .valeurs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .valeur-card {
+      background: white;
+      padding: 35px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-top: 5px solid #d2a94d;
+      transition: all 0.3s ease;
+    }
+
+    .valeur-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 77, 64, 0.2);
+    }
+
+    .valeur-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .valeur-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #004d40;
+      margin-bottom: 15px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .valeur-desc {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #d2a94d 0%, #f4d03f 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      margin: 50px 0;
+      box-shadow: 0 8px 30px rgba(210, 169, 77, 0.3);
+    }
+
+    .highlight-box h3 {
+      font-size: 32px;
+      margin: 0 0 15px 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .highlight-box p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* Styles pour le tableau de la ligne du temps */
+    .timeline-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .timeline-table thead {
+      background: linear-gradient(135deg, #004d40, #00695c);
+      color: white;
+    }
+
+    .timeline-table th {
+      padding: 20px 15px;
+      text-align: left;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: #f4d03f;
+    }
+
+    .timeline-table td {
+      padding: 18px 15px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .timeline-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .timeline-table tbody tr:hover {
+      background: #f6f1e1;
+      transform: translateX(5px);
+    }
+
+    .timeline-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .timeline-table td:first-child {
+      font-weight: 700;
+      color: #d2a94d;
+      white-space: nowrap;
+    }
+
+    .timeline-table td:nth-child(2) {
+      font-weight: 600;
+      color: #004d40;
+    }
+
+    @media (max-width: 768px) {
+      .histoire-hero h1 {
+        font-size: 32px;
+      }
+
+      .histoire-subtitle {
+        font-size: 18px;
+      }
+
+      .timeline-table {
+        font-size: 14px;
+      }
+
+      .timeline-table th,
+      .timeline-table td {
+        padding: 12px 10px;
+      }
+
+      .timeline-table th {
+        font-size: 16px;
+      }
+
+      .timeline-table td:first-child {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .timeline-table thead {
+        display: none;
+      }
+
+      .timeline-table,
+      .timeline-table tbody,
+      .timeline-table tr,
+      .timeline-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .timeline-table tr {
+        margin-bottom: 20px;
+        border: 2px solid #d2a94d;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .timeline-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+        position: relative;
+        padding-left: 45%;
+      }
+
+      .timeline-table td:last-child {
+        border-bottom: none;
+      }
+
+      .timeline-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: 700;
+        color: #004d40;
+        font-family: 'Playfair Display', serif;
+      }
+
+      .timeline-table td:first-child::before {
+        content: 'Époque:';
+      }
+
+      .timeline-table td:nth-child(2)::before {
+        content: 'Personnage:';
+      }
+
+      .timeline-table td:nth-child(3)::before {
+        content: 'Héritage:';
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo">
+    <button class="menu-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="histoire.html" class="active">Histoire & Origine</a>
+      <a href="arbre-cascade.html">Arbre Généalogique</a>
+      <a href="contact.html">À propos / Contact</a>
+    </nav>
+  </header>
+
+  <main class="contenu fade-in">
+    <!-- Hero Section -->
+    <div class="histoire-hero">
+      <h1 style="color: #ffffff;">🌿 Histoire & Origine de la Famille MAÏ</h1>
+      <p class="histoire-subtitle" style="color: #f4d03f;">🪶 Aux sources des MANGWAHÈ</p>
+    </div>
+
+    <!-- Aux sources des MANGWAHÈ -->
+    <div class="section-block">
+      <span class="section-icon">🪶</span>
+      <h2 class="section-title">Aux sources des MANGWAHÈ</h2>
+      <p style="font-size: 18px; line-height: 1.8;">
+        La Famille MAÏ plonge ses racines dans le village <strong>MINSE</strong>, situé au cœur du pays Bassa.
+      </p>
+      <p style="font-size: 18px; line-height: 1.8; margin-top: 20px;">
+        Le nom MINSE fut imposé durant la période coloniale, mais dans la mémoire des anciens, le véritable nom de cette terre est <strong>MANGWAHÈ</strong>, un nom qui porte en lui une histoire à la fois mystérieuse, poétique et fondatrice.
+      </p>
+    </div>
+
+    <!-- L'histoire de NGO NEMB et de la flèche du destin -->
+    <div class="section-block" style="background: linear-gradient(135deg, rgba(0, 77, 64, 0.03), rgba(108, 139, 99, 0.05));">
+      <span class="section-icon">🌾</span>
+      <h2 class="section-title">L'histoire de NGO NEMB et de la flèche du destin</h2>
+      <p style="font-size: 17px; line-height: 1.8;">
+        Les récits oraux rapportent qu'autrefois vivait à MANGWAHÈ une femme nommée <strong>NGO NEMB</strong>, connue pour sa bonté et sa sagesse.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Elle était handicapée des deux pieds, mais possédait une force d'esprit hors du commun.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Chaque nuit, un homme mystérieux venait la visiter.<br>
+        Il ne restait que dans l'obscurité et repartait avant le lever du jour.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Cet homme était un chasseur à l'arc, discret et habile, qui ne se montrait jamais à la lumière.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        De leur union naquit un fils nommé <strong>NGWAHAL</strong>, mot qui signifie <em>« flèche »</em> en langue Bassa, en hommage à son père, le chasseur invisible dont la flèche avait porté la vie.
+      </p>
+
+      <div class="quote-block" style="margin-top: 30px;">
+        De la nuit est née la lumière, et de la flèche, le nom.
+        <div class="quote-author">— Proverbe Bassa</div>
+      </div>
+
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 25px;">
+        Avec le temps et les générations, le nom <strong>NGWAHAL</strong> devint <strong>NGWAHE</strong>, puis les habitants de la région furent appelés <strong>MA NGWAHE</strong>, c'est-à-dire <em>« les enfants de la flèche »</em>.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Ainsi, <strong>MANGWAHÈ</strong> ne désigne pas seulement un lieu : il raconte l'histoire d'un peuple né de l'amour, du mystère et du courage.
+      </p>
+    </div>
+
+    <!-- Le symbole de la flèche -->
+    <div class="section-block">
+      <span class="section-icon">🌍</span>
+      <h2 class="section-title">Le symbole de la flèche</h2>
+      <p style="font-size: 17px; line-height: 1.8;">
+        La flèche, symbole central de ce mythe, incarne la direction, la vie et la transmission.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Elle unit les générations comme un trait reliant le passé au futur.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Être <strong>MA NGWAHE</strong>, c'est marcher sur le chemin tracé par la flèche du destin : une route faite de persévérance, de dignité et de mémoire.
+      </p>
+
+      <div class="quote-block" style="margin-top: 30px;">
+        La flèche part du cœur, mais c'est la main du destin qui la guide.
+      </div>
+    </div>
+
+    <!-- Les ancêtres fondateurs -->
+    <div class="section-block" style="background: linear-gradient(135deg, rgba(0, 77, 64, 0.03), rgba(108, 139, 99, 0.05));">
+      <span class="section-icon">👑</span>
+      <h2 class="section-title">Les ancêtres fondateurs</h2>
+      <p style="font-size: 17px; line-height: 1.8; margin-bottom: 25px;">
+        Sur cette terre de MANGWAHÈ, quatre grandes familles originelles s'établirent :
+      </p>
+
+      <div class="famille-list">
+        <div class="famille-item">
+          <div class="famille-name">LOG LÔGA</div>
+        </div>
+        <div class="famille-item">
+          <div class="famille-name">LOG DJAB</div>
+        </div>
+        <div class="famille-item">
+          <div class="famille-name">LOG BILIM</div>
+        </div>
+        <div class="famille-item">
+          <div class="famille-name">LOG HOL</div>
+        </div>
+      </div>
+
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 30px;">
+        De la branche <strong>LOG LÔGA</strong> naquit <strong>LÔGA</strong>, le patriarche, père de :
+      </p>
+      <ul style="font-size: 17px; line-height: 2; margin: 20px 0 20px 40px;">
+        <li><strong>BENA LÔGA</strong>,</li>
+        <li><strong>DJAP LÔGA</strong>,</li>
+        <li><strong>MATOUMB LÔGA</strong>,</li>
+        <li><strong>MASSOCK LÔGA</strong>.</li>
+      </ul>
+      <p style="font-size: 17px; line-height: 1.8;">
+        C'est par <strong>BENA LÔGA</strong> que s'écrit la lignée directe de la Famille MAÏ, aujourd'hui reconnue comme l'une des descendances majeures de MANGWAHÈ.
+      </p>
+    </div>
+
+    <!-- BENA LÔGA et la naissance de la lignée MAÏ -->
+    <div class="ancetre-card">
+      <h3 style="color: #f4d03f;">🌳 BENA LÔGA et la naissance de la lignée MAÏ</h3>
+      <p style="color: #ffffff;">
+        De <strong style="color: #f4d03f;">BENA LÔGA</strong> naquit <strong style="color: #f4d03f;">MAÏ BATJOM BA BENA</strong>, appelé aussi <strong style="color: #f4d03f;">NSOMBOL SONG</strong>, figure emblématique du lien entre les anciens et les générations futures.
+      </p>
+      <p style="margin-top: 20px; color: #ffffff;">
+        Il épousa <strong style="color: #f4d03f;">NGO BIKOÏ BI YAP</strong>, fille de la famille NDOG SOUGA LOG BADOG, et eut cinq fils :
+      </p>
+      <ul style="font-size: 18px; line-height: 2; margin-top: 20px; color: #ffffff;">
+        <li><strong style="color: #f4d03f;">MAÏ MAÏ</strong>,</li>
+        <li><strong style="color: #f4d03f;">BIKOÏ BI MAÏ</strong>,</li>
+        <li><strong style="color: #f4d03f;">BATJOM MAÏ</strong>,</li>
+        <li><strong style="color: #f4d03f;">MBOM MAÏ</strong> et</li>
+        <li><strong style="color: #f4d03f;">NWASGA MAÏ</strong>.</li>
+      </ul>
+      <p style="margin-top: 25px; color: #ffffff;">
+        Ces cinq noms devinrent les cinq racines d'un grand arbre familial dont les branches se sont depuis déployées à travers tout le Cameroun et au-delà.
+      </p>
+    </div>
+
+    <!-- La descendance de BIKOÏ BI MAÏ -->
+    <div class="section-block">
+      <span class="section-icon">👨‍👩‍👧‍👦</span>
+      <h2 class="section-title">La descendance de BIKOÏ BI MAÏ</h2>
+      <p style="font-size: 17px; line-height: 1.8;">
+        Parmi ces fils, <strong>BIKOÏ BI MAÏ</strong> laissa une empreinte particulière.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Il épousa <strong>NGO DJEL BAMHEG</strong> puis <strong>NGO BAYIHA PAULINE</strong>, et fonda plusieurs lignées :
+      </p>
+      <ul style="font-size: 17px; line-height: 2; margin: 20px 0 20px 40px;">
+        <li><strong>MAÏ BIKOÏ SALOMON</strong>,</li>
+        <li><strong>BIKOÏ BIKOÏ</strong>,</li>
+        <li><strong>YAP BIKOÏ</strong>,</li>
+        <li>et d'autres descendants qui perpétuent encore aujourd'hui son nom.</li>
+      </ul>
+      <p style="font-size: 17px; line-height: 1.8;">
+        Ces branches portent haut les valeurs héritées des anciens : le respect, la foi familiale, la solidarité et le travail.
+      </p>
+
+      <div class="quote-block" style="margin-top: 30px;">
+        Les racines ne vieillissent jamais.
+        <div class="quote-author">— Proverbe africain</div>
+      </div>
+    </div>
+
+    <!-- MAÏ BIKOÏ SALOMON -->
+    <div class="section-block" style="background: linear-gradient(135deg, rgba(0, 77, 64, 0.03), rgba(108, 139, 99, 0.05));">
+      <span class="section-icon">🌿</span>
+      <h2 class="section-title">MAÏ BIKOÏ SALOMON : la génération des bâtisseurs</h2>
+      <p style="font-size: 17px; line-height: 1.8;">
+        Fils de BIKOÏ BI MAÏ, <strong>MAÏ BIKOÏ SALOMON</strong> épousa <strong>NGO BANBA VÉRONIQUE</strong> puis <strong>NGO BASSAGAL MARIE</strong>, toutes deux originaires de MAGOND.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        De ces unions naquit une descendance nombreuse — enseignants, artisans, travailleurs et bâtisseurs — qui fit rayonner le nom MAÏ dans plusieurs régions du Cameroun.
+      </p>
+
+      <div class="quote-block" style="margin-top: 30px;">
+        Transmettre, c'est bâtir.
+      </div>
+
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 25px;">
+        Son parcours incarne le passage du monde rural à la modernité, sans jamais rompre le lien sacré avec les ancêtres.
+      </p>
+    </div>
+
+    <!-- BATJOM MAÏ -->
+    <div class="section-block">
+      <span class="section-icon">⚖️</span>
+      <h2 class="section-title">BATJOM MAÏ : la branche du partage</h2>
+      <p style="font-size: 17px; line-height: 1.8;">
+        Autre figure marquante, <strong>BATJOM MAÏ</strong>, fils de MAÏ BATJOM BA BENA, épousa successivement <strong>NGO NYOBE</strong>, <strong>NGO NKÔDOG GEORGETTE</strong>, et <strong>NGO NKANG</strong>.
+      </p>
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 15px;">
+        Sa descendance, établie entre le Cameroun et le Gabon, perpétue l'esprit d'ouverture et de générosité qui caractérise cette lignée.
+      </p>
+
+      <div class="quote-block" style="margin-top: 30px;">
+        L'arbre qui porte beaucoup de fruits ne casse pas sous le vent.
+      </div>
+    </div>
+
+    <!-- Ligne du temps familiale - TABLEAU -->
+    <div class="section-block">
+      <h2 class="section-title" style="text-align: center; margin-bottom: 30px;">🕰️ LIGNE DU TEMPS FAMILIALE</h2>
+
+      <table class="timeline-table">
+        <thead>
+          <tr>
+            <th>Époque</th>
+            <th>Personnage / Événement</th>
+            <th>Héritage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1800s</strong></td>
+            <td><strong>LÔGA</strong></td>
+            <td>Patriarche fondateur du clan LOG LÔGA</td>
+          </tr>
+          <tr>
+            <td><strong>Fin 1800s</strong></td>
+            <td><strong>BENA LÔGA</strong></td>
+            <td>Naissance de la lignée directe MAÏ</td>
+          </tr>
+          <tr>
+            <td><strong>Début 1900s</strong></td>
+            <td><strong>MAÏ BATJOM BA BENA (NSOMBOL SONG)</strong></td>
+            <td>Fondation des cinq branches principales</td>
+          </tr>
+          <tr>
+            <td><strong>Années 1950</strong></td>
+            <td><strong>MAÏ BIKOÏ SALOMON</strong></td>
+            <td>Expansion familiale vers les villes</td>
+          </tr>
+          <tr>
+            <td><strong>Années 2000</strong></td>
+            <td><strong>Réunions intergénérationnelles MAÏ</strong></td>
+            <td>Création du site <em>famillemai.cm</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Héritage et transmission -->
+    <div class="section-block" style="background: linear-gradient(135deg, rgba(0, 77, 64, 0.03), rgba(108, 139, 99, 0.05));">
+      <span class="section-icon">💫</span>
+      <h2 class="section-title">Héritage et transmission</h2>
+      <p style="font-size: 17px; line-height: 1.8; margin-bottom: 35px;">
+        De génération en génération, la Famille MAÏ a conservé une identité forte, fondée sur trois valeurs cardinales :
+      </p>
+
+      <div class="valeurs-grid">
+        <div class="valeur-card">
+          <div class="valeur-icon">🪶</div>
+          <div class="valeur-title">Unité</div>
+          <div class="valeur-desc">Nous venons d'une même racine.</div>
+        </div>
+
+        <div class="valeur-card">
+          <div class="valeur-icon">🌾</div>
+          <div class="valeur-title">Mémoire</div>
+          <div class="valeur-desc">Nos ancêtres vivent à travers nos récits.</div>
+        </div>
+
+        <div class="valeur-card">
+          <div class="valeur-icon">🌍</div>
+          <div class="valeur-title">Dignité</div>
+          <div class="valeur-desc">Porter le nom MAÏ, c'est marcher droit, avec honneur.</div>
+        </div>
+      </div>
+
+      <p style="font-size: 17px; line-height: 1.8; margin-top: 30px; text-align: center;">
+        Ces valeurs sont le socle sur lequel reposent les liens entre toutes les branches de la grande famille.
+      </p>
+    </div>
+
+    <!-- Une maison, une mémoire -->
+    <div class="highlight-box">
+      <h3>🌺 Une maison, une mémoire</h3>
+      <p>
+        Le site <strong>famillemai.cm</strong> se veut une maison de mémoire :<br>
+        un lieu virtuel où chaque descendant peut retrouver ses origines, honorer ses ancêtres et transmettre l'histoire de la lignée.
+      </p>
+    </div>
+
+    <!-- Citation -->
+    <div class="quote-block">
+      La mémoire d'un peuple se nourrit de ses enfants.
+    </div>
+
+    <!-- Aujourd'hui -->
+    <div class="section-block" style="background: linear-gradient(135deg, #004d40, #00695c); color: white; border: none;">
+      <span class="section-icon">🏡</span>
+      <h2 style="font-size: 32px; color: #f4d03f; margin: 20px 0; font-family: 'Playfair Display', serif; font-weight: 700;">
+        Aujourd'hui…
+      </h2>
+      <p style="font-size: 18px; line-height: 1.9; color: #ffffff;">
+        Aujourd'hui, les descendants MAÏ vivent à Douala, Yaoundé, Edéa, Akonolinga, et même au Gabon.<br>
+        Où qu'ils soient, ils gardent la même flamme : celle du sang, du nom et du souvenir.
+      </p>
+      <p style="font-size: 20px; line-height: 1.9; margin-top: 30px; color: #f4d03f; font-weight: 700; text-align: center;">
+        🌟 Être MAÏ, c'est marcher dans la lumière de MANGWAHÈ.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align: center; margin: 60px 0;">
+      <a href="arbre-cascade.html" class="btn" style="display: inline-block; margin: 0 10px 15px; text-decoration: none; font-size: 18px;">
+        🌳 Découvrir l'arbre généalogique
+      </a>
+      <a href="contact.html" class="btn secondary" style="display: inline-block; margin: 0 10px 15px; text-decoration: none; font-size: 18px;">
+        📞 Nous contacter
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Famille MAÏ – <a href="https://famillemai.cm">www.famillemai.cm</a>
+  </footer>
+
+  <script>
+    // Header sticky effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Menu hamburger
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

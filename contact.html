@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famille MAÏ – À propos / Contact</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo">
+    <button class="menu-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="histoire.html">Histoire & Origine</a>
+      <a href="arbre-cascade.html">Arbre Généalogique</a>
+      <a href="contact.html" class="active">À propos / Contact</a>
+    </nav>
+  </header>
+
+  <main class="contenu fade-in">
+    <h1>À propos de la Famille MAÏ</h1>
+    <p>
+      Ce site vise à préserver la mémoire et à renforcer les liens
+      entre tous les descendants de la lignée MAÏ, issus du village MINSE (MA GWAHÈ).
+    </p>
+
+    <h2>Nous contacter</h2>
+    <p>📍 Cameroun – Douala / Yaoundé</p>
+    <p>📱 WhatsApp : <a href="https://wa.me/237699849541" target="_blank">+237 699 84 95 41</a></p>
+    <p>✉️ Email : <a href="mailto:kamerdesignstyle@gmail.com">kamerdesignstyle@gmail.com</a></p>
+
+    <h2>Coordination du site</h2>
+    <p>
+      La mise à jour du site est assurée par les membres de la Famille MAÏ,
+      sous la supervision du comité de coordination familiale.
+    </p>
+  </main>
+
+  <footer>
+    © 2025 Famille MAÏ – <a href="https://famillemai.cm">www.famillemai.cm</a>
+  </footer>
+
+  <script>
+    // Header sticky effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Menu hamburger
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

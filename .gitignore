@@ -1,0 +1,31 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dépendances (si vous en ajoutez plus tard)
+node_modules/
+vendor/
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.cache/
+
+# Fichiers sensibles (si vous en avez)
+.env
+.env.local
+config.php

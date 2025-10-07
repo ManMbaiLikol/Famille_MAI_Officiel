@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famille MAÏ – Introduction</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-color: #f6f1e1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .logo-intro {
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeZoomIn 2s ease-in-out forwards;
+    }
+    @keyframes fadeZoomIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+  <script>
+    // Redirection après 3 secondes
+    setTimeout(() => { window.location.href = "index.html"; }, 3000);
+  </script>
+</head>
+<body>
+  <!-- Son doux africain -->
+  <audio autoplay>
+    <source src="audio/intro-kora.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Logo -->
+  <img src="images/logo-mai.png" alt="Logo Famille MAÏ" class="logo-intro">
+</body>
+</html>
